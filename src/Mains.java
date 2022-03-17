@@ -14,15 +14,14 @@ public class Mains {
                  Ceasar's Cypher
                  This is a tool for en- and decrypting text with the famous "Ceasar's Cypher".
                  In order to use this tool properly you must take attention to the following:
-                 -Only use the standard latin letters "a" to "z". If you use anything but, the program will crash. I'm not intending to work on a fix.
+                 -Only use the standard latin letters "a" to "z" or Umlaute.
                  -Only use lowercase letters
-                 -Do NOT use spaces
-                 -Pray to God that the program will run properly
                  -Avoid using a key which is a multiple of 26
+                 -Pray to God that the program will run properly
                 \s
                  In order to decipher Text.
-                 -Enter the key with a minus character up front,
-                 -Enter encrypted key.
+                 -Enter the key with a minus character up front.
+                 -Enter cipher text.
                  -Observe magic.""");
 
 
@@ -36,40 +35,76 @@ public class Mains {
         System.out.print("\n Key: " + key + " (Mod: "+ key % 26 +") ; Text to be en-/decrypted: " + plain);
 
         //Encrypted text
-        StringBuilder encrpt = new StringBuilder(); //Needed, so that the program doesn't output "null" at the beginning of the cypher.
+        StringBuilder encrpt = new StringBuilder();
 
         for (int i = 0; i < plain.length(); i++) {
             char c = plain.charAt(i);
             key = key % 26;
-            c = (char) (c + key);
-            if (c - 'z' > 0) {
-                c = (char) (c - 26);
+
+            if (c == ' '){
+                encrpt.append(c);
+            }else if (c == 'ü'){
+                c = (char) ('u' + key);
+                c = ck(c);
+                encrpt.append(c);
+                c = (char) ('e' + key);
+                c = ck(c);
+                encrpt.append(c);       //This is terrible.
+            }else if (c == 'ö'){
+                c = (char) ('o' + key);
+                c = ck(c);
+                encrpt.append(c);
+                c = (char) ('e' + key);
+                c = ck(c);
+                encrpt.append(c);       //This is terrible.
+            }else if (c == 'ä'){
+                c = (char) ('a' + key);
+                c = ck(c);
+                encrpt.append(c);
+                c = (char) ('e' + key);
+                c = ck(c);
+                encrpt.append(c);       //This is terrible.
+            }else {
+                c = (char) (c + key);
+                c = ck(c);
+                encrpt.append(c);
             }
-            if (c - 'a' < 0) {
-                c = (char) (c + 26);
-            }
-            encrpt.append(c);
         }
         System.out.print("\n\n Encrypted text: " + encrpt);
 
         //TODO: Make this a function.
     }
 
+    private char ck (char c){
+        if (c - 'z' > 0) {
+            c = (char) (c - 26);
+        }
+        if (c - 'a' < 0) {
+            c = (char) (c + 26); //TODO: METHOD!!!!
+        }
+        return c;
+    }
+
         /*
         The first task called to turn Umlaute into their written version ("ä" to "ae" and so on...)
         However I'm not willing to do so because I'm a lazy fuck.
         I'll mitigate this issue by prompting the user to simply only enter the letters "a" to "z"
+
+        Edit: Turns out I'm not that lazy.
+
         The second task calls for a for-loop which turns each letter from the "plain" string into
         into a char "c". This char is then to be encrypted using the method "encrypt()"
         This char is then to be added to the String "encrpt"
         inside of that loop:
         encrpt += Character.toString( encrypt(c));
+
+        Edit: Used the append function instead.
         */
 
     /*
     For personal reference:
      Integer.parseInt(); //Grab Int from String
-     Character.toString(); //Name explains it
+     Character.toString(); //Name explains it  //Can be replaced with append, given the situation.
     */
 
         /*
