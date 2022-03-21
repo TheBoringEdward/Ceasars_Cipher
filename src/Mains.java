@@ -77,7 +77,6 @@ public class Mains {
 
         for (int i = 0; i < plain.length(); i++) {
             char c = plain.charAt(i);
-            key = key % 26;
 
             if (c == 'ß'){
                 c = (char) ('s' - key);
