@@ -11,68 +11,111 @@ public class Mains {
         System.out.print("""
 
 
-                 Ceasar's Cypher
+                 Caesar's Cipher
                  This is a tool for en- and decrypting text with the famous "Ceasar's Cypher".
                  In order to use this tool properly you must take attention to the following:
-                 -Only use the standard latin letters "a" to "z" or Umlaute.
+                 -Only use latin letters "a" to "z" or Umlaute.
                  -Only use lowercase letters
-                 -Avoid using a key which is a multiple of 26
-                 -Pray to God that the program will run properly
-                \s
-                 In order to decipher Text.
-                 -Enter the key with a minus character up front.
-                 -Enter cipher text.
-                 -Observe magic.""");
+                 -Avoid using a key which is a multiple of 26 or your text will look the same
+                 -Pray to your local deity that the program will run properly""");
 
 
         System.out.print("\n\n Enter Key: \n");
-        //Amount to shift letters
         int key = scn2.nextInt();
-        System.out.print("\n Enter Text to process: \n");
+        System.out.print("\n Enter Text to be processed: \n");
         //Plain text
         String plain = scn2.nextLine();
         plain = scn2.nextLine();
-        System.out.print("\n Key: " + key + " (Mod: "+ key % 26 +") ; Text to be en-/decrypted: " + plain);
+        System.out.print("\n Key: " + key + " (Mod: "+ key % 26 +") ; Text to be processed: " + plain);
 
         //Encrypted text
-        StringBuilder encrpt = new StringBuilder();
+        StringBuilder procc = new StringBuilder();
 
         for (int i = 0; i < plain.length(); i++) {
             char c = plain.charAt(i);
             key = key % 26;
 
-            if (c == ' '){
-                encrpt.append(c);
+            if (c == 'ß'){
+                c = (char) ('s' + key);
+                c = ck(c);
+                procc.append(c);
+                c = (char) ('s' + key);
+                c = ck(c);
+                procc.append(c);
+            }else if (c == ' '){
+                procc.append(c);
             }else if (c == 'ü'){
                 c = (char) ('u' + key);
                 c = ck(c);
-                encrpt.append(c);
+                procc.append(c);
                 c = (char) ('e' + key);
                 c = ck(c);
-                encrpt.append(c);       //This is terrible.
+                procc.append(c);       //This is terrible.
             }else if (c == 'ö'){
                 c = (char) ('o' + key);
                 c = ck(c);
-                encrpt.append(c);
+                procc.append(c);
                 c = (char) ('e' + key);
                 c = ck(c);
-                encrpt.append(c);       //This is terrible.
+                procc.append(c);       //This is terrible.
             }else if (c == 'ä'){
                 c = (char) ('a' + key);
                 c = ck(c);
-                encrpt.append(c);
+                procc.append(c);
                 c = (char) ('e' + key);
                 c = ck(c);
-                encrpt.append(c);       //This is terrible.
+                procc.append(c);       //This is terrible.
             }else {
                 c = (char) (c + key);
                 c = ck(c);
-                encrpt.append(c);
+                procc.append(c);
             }
         }
-        System.out.print("\n\n Encrypted text: " + encrpt);
+        System.out.print("\n\n Encrypted text: " + procc);
 
-        //TODO: Make this a function.
+        procc.setLength(0);
+
+        for (int i = 0; i < plain.length(); i++) {
+            char c = plain.charAt(i);
+            key = key % 26;
+
+            if (c == 'ß'){
+                c = (char) ('s' - key);
+                c = ck(c);
+                procc.append(c);
+                c = (char) ('s' - key);
+                c = ck(c);
+                procc.append(c);
+            }else if (c == ' '){
+                procc.append(c);
+            }else if (c == 'ü'){
+                c = (char) ('u' - key);
+                c = ck(c);
+                procc.append(c);
+                c = (char) ('e' - key);
+                c = ck(c);
+                procc.append(c);       //This is terrible.
+            }else if (c == 'ö'){
+                c = (char) ('o' - key);
+                c = ck(c);
+                procc.append(c);
+                c = (char) ('e' - key);
+                c = ck(c);
+                procc.append(c);       //This is terrible.
+            }else if (c == 'ä'){
+                c = (char) ('a' - key);
+                c = ck(c);
+                procc.append(c);
+                c = (char) ('e' - key);
+                c = ck(c);
+                procc.append(c);       //This is terrible.
+            }else {
+                c = (char) (c - key);
+                c = ck(c);
+                procc.append(c);
+            }
+        }
+        System.out.print("\n\n Decrypted text: " + procc);
     }
 
     private char ck (char c){
@@ -80,7 +123,7 @@ public class Mains {
             c = (char) (c - 26);
         }
         if (c - 'a' < 0) {
-            c = (char) (c + 26); //TODO: METHOD!!!!
+            c = (char) (c + 26);
         }
         return c;
     }
@@ -107,28 +150,8 @@ public class Mains {
      Character.toString(); //Name explains it  //Can be replaced with append, given the situation.
     */
 
-        /*
-        If it is not a letter, just leave it as is
-        If it is a minuscule, transform it into a majuscule
-        If it is a majuscule use count[c-'A']++; to count it
-        Now shift it by "key" positions to the right in the alphabet
-
-        Remnant of the JFrame stuff.
-        */
-
-    /*
-    private void statistics() {  //Don't know the purpose of this. I assume it is a remnant of Wiele's JFrame debauchery.
-        int sum = 0;
-        for (int i = 0; i < 26; i++) {
-            System.out.print("\n\n " + Character.toString('a' + i) + " : " + count[i]);
-            sum += count[i];
-        }
-        System.out.print("\n\n Altogether " + sum + " letters.\n\n");
-    }
-     */
-
     public static void main(String[] args) {
         Mains e = new Mains();
-        System.out.print("\n ======= This code has been provided by TheBoringEdward =======");
+        System.out.print("\n\n ======= This code has been provided by TheBoringEdward =======");
     }
 }
